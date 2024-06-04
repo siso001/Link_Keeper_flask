@@ -1,0 +1,54 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<!-- 
+    <div class="folder-litter">
+        <p>red</p>
+        <div>
+            <img src="{{ url_for('static', filename='img/link.svg') }}">
+            <a>1</a>
+        </div>
+    </div>
+-->
+<script>
+    fadeInOut(".toolbar-button", ".create-menu");
+</script>
+
+<main class="user-main">
+    <div class="toolbar">
+        <div class="toolbar-button">
+            <div class="toolbar-button-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                
+                <p>追加</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="create-menu">
+        <div class="create-folder-href">
+            <a href="{{ url_for('create_folder') }}">フォルダを作成</a>
+        </div>
+        <div>
+            <a>URLをフォルダに保存</a>
+        </div>
+    </div>
+
+    <section class="folder-box">
+        <h2>全てのフォルダ</h2>
+        <div class="folder-box-div">
+            {% for folder in folders %}
+            <div class="folder-litter {{ folder.folder_color.color }}">
+                {% set text = folder.folder_name %}
+                {% set linknumber = folder.folder_id %}
+                {% include 'folder.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    
+    
+</main>
+
+
+{% endblock %}

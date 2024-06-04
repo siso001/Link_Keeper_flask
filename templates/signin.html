@@ -1,0 +1,34 @@
+{% extends "header.html" %}
+
+{% block content %}
+<div id="signin" class="signin-page wrapper">
+    <img src="{{ url_for('static', filename='img/icon.svg') }}">
+    <div class="border"></div>
+    <div class="signin-page-form">
+        <h2>link keeperにログイン</h2>
+        <form method="post">
+                <ul>
+                    <li><input type=text name=email  placeholder="Email" class="text"></li>
+                    <li><input type=password name=password placeholder="password" class="text"></li>
+                </ul>
+            <div class="signin-button-div">
+                <p>ログインできない場合</p>
+                <input type="submit" value="Sign In" class="button">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="error-massage">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="UTF-8">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/function.js') }}"></script>
+    <style>
+        .red {
+            background-image: url("{{ url_for('static', filename='img/red.png') }}");
+        }
+        .yellow {
+            background-image: url("{{ url_for('static', filename='img/yellow.png') }}");
+        }
+        .blue {
+            background-image: url("{{ url_for('static', filename='img/blue.png') }}");
+        }
+        .green {
+            background-image: url("{{ url_for('static', filename='img/green.png') }}");
+        }
+        .glay {
+            background-image: url("{{ url_for('static', filename='img/glay.png') }}");
+        }
+    </style>
+</head>
+<body>
+    <header class="header wrapper">    
+        <a class="logo" href="{{ url_for('index') }}">
+            <img  src="{{ url_for('static', filename='img/Link-keeper.svg') }}">
+        </a>
+        <a class="user">
+            {% if current_user.is_authenticated %}
+                <h2>{{ current_user.username }}</h2>
+            {% else %}    
+                <h2>Guest</h2>
+            {% endif %}            
+        <img src="{{ url_for('static', filename='img/arrow.svg') }}">
+        </a>
+    </header>
+    <div class="menu">
+            {% if current_user.is_authenticated %}
+            <a class="signin-menu" href="{{ url_for('userpage') }}">
+                <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-page">
+                <p>My Page</p>
+            </a>
+            <a class="signup-menu" href="{{ url_for('logout') }}">
+                <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
+                <p>Sign Out</p>
+            </a>
+            {% else %}
+            <a class="signin-menu" href="{{ url_for('signin') }}">
+                <img src="{{ url_for('static', filename='img/sign-in.svg') }}" alt="log-in">
+                <p>Sign In</p>
+            </a>
+            <a class="signup-menu" href="{{ url_for('signup') }}">
+                <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
+                <p>Sign Up</p>
+            </a>
+            {% endif %}
+    </div>
+    <script>
+        fadeInOut(".user", ".menu");
+    </script>
+
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>
