@@ -29,12 +29,23 @@ class Folder(db.Model):
 
     # ユーザーが持つフォルダへのリレーションシップ
     folder_color = db.relationship('FolderColor', backref='folders')
+    urls = db.relationship('Url', backref='folder', cascade="all, delete-orphan", lazy='dynamic')
 
     __table_args__ = (db.UniqueConstraint('user_id', 'folder_name', name='unique_folder_name_per_user'),)
 
+    def __repr__(self):
+        return self.folder_name
+
+    def url_count(self):
+        return self.urls.count()
 
 class Url(db.Model):
     __tablename__ = 'url'
     url_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    folder_id = db.Column(db.Integer, db.ForeignKey('folder.folder_id'), nullable=False)
     url = db.Column(db.String(2550), nullable=False)
+    url_name = db.Column(db.String(255), nullable=False)
+    domain = db.Column(db.String(255), nullable=False)
+    folder_id = db.Column(db.Integer, db.ForeignKey('folder.folder_id', ondelete='CASCADE'), nullable=False, )
+
+    def __repr__(self):
+        return f"{self.url}"

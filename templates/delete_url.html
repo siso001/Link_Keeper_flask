@@ -1,22 +1,13 @@
-{% extends "header.html" %}
-
-
-{% block content %}
 <div id="signin" class="signin-page wrapper">
     <img src="{{ url_for('static', filename='img/icon.svg') }}">
-    <div class="border"></div>
+    <div class="border"></div> 
     <div class="signin-page-form">
-        <h2>フォルダを作成</h2>
+        <h2>フォルダ内のURLを削除</h2>
         <form method="post">
                 <ul>
                     <li><input type=text name=title  placeholder="Title" class="text"></li>
                     <li>
-                        <select name="color">
-                            <option value="1">Red</option>
-                            <option value="2">Yellow</option>
-                            <option value="3">Blue</option>
-                            <option value="4">Green</option>
-                            <option value="5">Gray</option>
+                        <select name="url">
                         </select>
                     </li>
                 </ul>
@@ -26,4 +17,3 @@
         </form>
     </div>
 </div>
-{% endblock %}

@@ -2,25 +2,27 @@
 <head>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@3.0.2/destyle.css">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/function.js') }}"></script>
     <style>
-        .red {
+        .backgroundimage-red {
             background-image: url("{{ url_for('static', filename='img/red.png') }}");
         }
-        .yellow {
+        .backgroundimage-yellow {
             background-image: url("{{ url_for('static', filename='img/yellow.png') }}");
         }
-        .blue {
+        .backgroundimage-blue {
             background-image: url("{{ url_for('static', filename='img/blue.png') }}");
         }
-        .green {
+        .backgroundimage-green {
             background-image: url("{{ url_for('static', filename='img/green.png') }}");
         }
-        .glay {
-            background-image: url("{{ url_for('static', filename='img/glay.png') }}");
-        }
+        .backgroundimage-gray {
+            background-image: url("{{ url_for('static', filename='img/gray.png') }}");
+        }        
     </style>
 </head>
 <body>
@@ -38,29 +40,50 @@
         </a>
     </header>
     <div class="menu">
+        <ul>
             {% if current_user.is_authenticated %}
-            <a class="signin-menu" href="{{ url_for('userpage') }}">
-                <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-page">
-                <p>My Page</p>
-            </a>
-            <a class="signup-menu" href="{{ url_for('logout') }}">
-                <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
-                <p>Sign Out</p>
-            </a>
+            <li>
+                <a class="signin-menu" href="{{ url_for('userpage') }}">
+                    <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-page">
+                    <p>My Page</p>
+                </a>    
+            </li>
+            <li>
+                <a class="signup-menu" href="{{ url_for('logout') }}">
+                    <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
+                    <p>Sign Out</p>
+                </a>    
+            </li>
             {% else %}
-            <a class="signin-menu" href="{{ url_for('signin') }}">
-                <img src="{{ url_for('static', filename='img/sign-in.svg') }}" alt="log-in">
-                <p>Sign In</p>
-            </a>
-            <a class="signup-menu" href="{{ url_for('signup') }}">
-                <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
-                <p>Sign Up</p>
-            </a>
+            <li>
+                <a class="signin-menu" href="{{ url_for('signin') }}">
+                    <img src="{{ url_for('static', filename='img/sign-in.svg') }}" alt="log-in">
+                    <p>Sign In</p>
+                </a>    
+            </li>
+            <li>
+                <a class="signup-menu" href="{{ url_for('signup') }}">
+                    <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
+                    <p>Sign Up</p>
+                </a>
+    
+            </li>
             {% endif %}
+
+        </ul>
     </div>
     <script>
         fadeInOut(".user", ".menu");
     </script>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
     {% block content %}
 

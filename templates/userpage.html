@@ -26,28 +26,39 @@
     </div>
 
     <div class="create-menu">
-        <div class="create-folder-href">
-            <a href="{{ url_for('create_folder') }}">フォルダを作成</a>
-        </div>
-        <div>
-            <a>URLをフォルダに保存</a>
-        </div>
+        <ul>
+            <li class="create-folder-href">
+                <a href="{{ url_for('create_folder') }}">フォルダを作成</a>
+            </li>
+            <li>
+                <a href="{{ url_for('add_url') }}">URLをフォルダに保存</a>
+            </li>
+            <li>
+                <a href="{{ url_for('delete_folder') }}">フォルダを削除</a>
+            </li>
+            <li>
+                <a href="{{ url_for('delete_url') }}">フォルダ内のURLを削除</a>
+            </li>
+        </ul>
     </div>
 
     <section class="folder-box">
         <h2>全てのフォルダ</h2>
         <div class="folder-box-div">
             {% for folder in folders %}
-            <div class="folder-litter {{ folder.folder_color.color }}">
-                {% set text = folder.folder_name %}
-                {% set linknumber = folder.folder_id %}
-                {% include 'folder.html' %}
-            </div>
+            <a href="{{ url_for('another_folder', folder_id=folder.folder_id, folder_name=folder.folder_name) }}">
+                <div class="folder-litter {{ folder.folder_color.color }}">
+                    <div class="folder-title"><p>{{ folder.folder_name | safe}}</p></div>
+                        <div class="folder-litter-div">
+                            <img src="{{ url_for('static', filename='img/link.svg')}}">
+                            <a class="folder-litter-div-a">{{ folder.urls.all()|length }}</a>
+                        </div>
+                </div>    
+            </a>
             {% endfor %}
         </div>
     </section>
-    
-    
+
 </main>
 
 
