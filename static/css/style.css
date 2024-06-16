@@ -1,10 +1,34 @@
 @charset "UTF-8";
+:root {
+    --red: #BF3131;
+    --yellow: #F6AE2D;
+    --blue: #21BBEC;
+    --green: #60D286;
+    --gray: #7E8083;
+}
 
+.backgroundcolor-red {
+    background: var(--red);
+}
+.backgroundcolor-yellow {
+    background: var(--yellow);
+}
+.backgroundcolor-blue {
+    background: var(--blue);
+}
+.backgroundcolor-green {
+    background: var(--green);
+}
+.backgroundcolor-gray {
+    background: var(--gray);
+}
 body {
     margin: 0px;
     padding: 0px;
 }
-
+h1, h2 {
+    font-weight: bold;
+}
 .wrapper {
     margin: 32px 120px;
 }
@@ -43,20 +67,10 @@ img::selection,
     border: 2px solid #FFB827;    
     margin: 0 0 0 auto;
 }
-.button:hover {
+.button:active {
     color: #FFB827;  
     background: #ffffff;  
 }
-/* カスタムコード
-.intr-button1 {
-    background: #373A40;
-    border: 2px solid #373A40;
-    font-weight: bold;
-}
-.intr-button1:hover {
-    color: #373A40;  
-}
-*/
 .logo img{
     height: 56px;
     width: auto;
@@ -71,16 +85,15 @@ img::selection,
 }
 .user {
     align-items: center;
-    display:flex;
-    position:absolute; 
+    display: flex;
+    position: absolute; 
     /* absoluteはimgタグではなく親要素のdivに追加する */
     right: 0;
     text-decoration: none;
     color: black;
     transition: 0.4s;
-    justify-content: center; /* 要素を水平方向に中央揃え */
-    align-items: center; /* 要素を垂直方向に中央揃え */
-
+    justify-content: center; 
+    align-items: center; 
 } 
 
 .header {
@@ -88,6 +101,14 @@ img::selection,
     align-items: center;
     position:relative;
     z-index: 10;
+}
+.alert {
+    position: absolute;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    padding: 10px 20px;
+    z-index: 1000;
 }
 .box {
     background: #D9D9D9;
@@ -113,7 +134,7 @@ img::selection,
     border: 2px solid #373A40;
     font-weight: bold;
 }
-.intr-button1:hover {
+.intr-button1:active {
     color: #373A40;
 }
 .intr-button2 {
@@ -121,11 +142,12 @@ img::selection,
     border: 2px solid #F6AE2D;    
     font-weight: bold;
 }
-.intr-button2:hover {
+.intr-button2:active {
     color: #F6AE2D;  
 }
 
 .menu{
+    display: none;
     background-color: white;
     border-radius: 5px;
     padding: 0 16px;
@@ -134,16 +156,15 @@ img::selection,
     margin-top: -32px;
     border: solid 1px #b6b6b6;
     z-index: 20;
+
+    /* opacity: 0;
+    transition: opacity 0.3s ease; */
 }
-/* .menu:before {
-    content: "";
-    position: absolute;
-    top: -16px;
-    left: 50%;
-    margin-left: -8px;
-    border: 8px solid transparent;
-    border-bottom: 5px solid #b6b6b6;
-} */
+/* .menu.show {
+    opacity: 1;
+    display: block; 
+}
+ */
 .user:hover {
     opacity: 0.5;
 }
@@ -153,36 +174,29 @@ img::selection,
 .menu p{
     font-weight:bold;
     color: black;
-    margin-left: 16px;
+    margin-left: 8px;
 }
 .signin-menu, .signup-menu {
-    display: flex;
-    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    margin: 14px 0;
 }
 .signin-menu {
-    margin-bottom: -16px;
-}
-.signup-menu {
-    margin-top: -16px;
-}
-.menu {
-    position: absolute;
-    z-index: 20;
+    margin-bottom: 0;
 }
 
 /* ======= */
 
 .signin-page {
     margin: 120px auto;
-    margin-bottom: 0;
+    width: fit-content;
     border-radius: 20px;
-    width: 781px;
-    height: auto;
-    padding: 48px 0;
-    padding-left: 32px;
+    padding: 48px 32px;
     border: solid 2px #bdbdbd;
     display: flex;
     align-items: center;
+    display: flex; 
+    justify-content: center;
 }
 .signin-page img {
     width: 180px;
@@ -201,20 +215,20 @@ img::selection,
     height: 240px;
 }
 .signin-page-form {
-    margin-left: 20px;
-
+    margin: 0 20px;
 }
 .signin-page h2 {
     font-size: 20px;
     color: #565656;
+    margin-bottom: 20px;
 }
 .text {
     width: 366px;
-    height:auto;
+    height: 40px;
     border: solid 1px #FFB827;
     border-radius: 5px;
     padding: 10px 20px;
-    margin: 10px 0;
+    margin-bottom: 18px;
     font-size: 16px;
     color: #565656;
 }
@@ -244,55 +258,70 @@ img::selection,
     /* margin: 32px 0 32px 64px; */
 }
 .folder-box-div {
-    margin-top: 4px;
+    margin: 8px 0 0 8px;
     width: 100%;
     overflow-x: scroll;
     white-space: nowrap;
     display: flex;
-    
 }
 .folder-litter {
     width: 150px;
-    height: auto;
     background-size: cover; 
+    background-size: contain; 
     background-repeat: no-repeat;
-    background-position: contain;
-    margin: 8px;
-    display: flex;
+    display: inline-block;
     flex-direction: column;
     padding: 8px;
     box-sizing: border-box;
     flex-shrink: 0; /* 幅を超えて縮まないように */
+    margin: 6px 16px 0 0;
 }
-.folder-litter p, a{
+.folder-litter p, 
+.folder-litter a {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    padding:0;
+    padding: 0;
     margin: 0;
 }
-.folder-litter p {
-    margin: 12px 0 48px 8px;
+.folder-title {
+    margin: 18px 0 0 10px;
+    width: 128px;
+    height: 18px;
+    word-wrap: break-word; 
+    white-space: normal;
 }
-.folder-litter a {
-    margin-left: 6px;
+.folder-title br {
+    margin-bottom: 3px;
 }
-.folder-litter img {
-    margin-left: 8px;
+.folder-title p{
+    word-break: break-all;
+}
+.folder-litter-div {
+    display: inline-block;
+    width: auto;
+    margin: 48px 0 4px 10px;
+    vertical-align: middle; 
+}
+.folder-litter-div-a {
+    margin-left: 2px;
+    margin-bottom: 1px;
+    vertical-align: middle; 
+    height: 16px;
+}
+.folder-litter-div a img {
     width: 16px;
-}
-.folder-litter div {
-    display: flex;
+    vertical-align: middle; 
 }
 .folder-box h2 {
     margin-left: 8px;
+    font-size: 22px;
 }
 
 .user-main {
     display: flex;
     position: relative;
     z-index: 1;
-
 }
 .toolbar {
     margin: 32px 48px;
@@ -312,7 +341,7 @@ img::selection,
     text-align: center;      
     cursor: pointer;
 }
-.toolbar-button:hover{
+.toolbar-button:active{
     color: #373A40;  
     background: #ffffff;  
 }
@@ -321,28 +350,28 @@ img::selection,
     transition: .3s;
     cursor: pointer;
 }
-.toolbar-button:hover .toolbar-button-icon svg {
+.toolbar-button:active .toolbar-button-icon svg {
     stroke: #373A40;
 }
 .toolbar-button-icon {
     display: flex;
+    align-items: center;
 }
 .toolbar-button-icon p {
-    margin: 0;
     margin-left: 4px;
 }
 .create-menu{
     position: absolute;
     background-color: white;
     border-radius: 3px;
-    padding: 0 16px;
+    padding: 4px 16px;
     display: none;
     border: solid 1px #b6b6b6;
     margin: 32px 48px;
     z-index: 30;
 }
-.create-menu a{
-    margin: 0;
+.create-menu ul li{
+    margin: 8px 0;
     padding: 0;
     color: #373A40;
     font-weight: 100;
@@ -375,4 +404,74 @@ img::selection,
 .glay a::selection {
     background:#636363;
     color:#fff;
+}
+.folder-litter a {
+    font-style: none;
+}
+.folder_urls {
+    margin: 100px auto;
+    width: auto;
+}
+.folder_urls ul li a{
+    color: #565656;
+}
+.folder_urls h1 {
+    display: inline-block;
+    font-size: 24px;
+    width: auto;
+    margin: 8px 10px;
+}
+.folder_urls {
+    width: 75%;
+    margin: 0 auto;
+}
+.folder_urls table {
+    text-align: center;
+    border-collapse: separate;
+    width: 100%; /* テーブルの幅を100%に設定 */
+}
+.folder_urls table tr:nth-child(2n+1) {
+    background: #d3d3d3;
+}
+.folder_urls table th {
+    padding: 10px;
+    border: solid 1px #ffffff;
+    color: #ffffff;
+}
+.folder_urls table td {
+    padding: 10px;
+    border: solid 1px #ffffff;
+    background: #e8e8e8;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.url {
+    width: 75%;
+    max-width: 0.1em;
+    overflow: hidden;
+}
+.folder_urls .url .url-content a, 
+.folder_urls .domain a {
+    text-decoration: underline;
+}
+.folder_urls table td.url .url-content {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    /*IE(Internet Explorer)・Microsoft Edgeへの対応*/
+    -ms-overflow-style: none;
+    /*Firefoxへの対応*/
+    scrollbar-width: none;
+}
+.folder_urls table td.url .url-content a:active,
+.folder_urls .domain a:active {
+    color: #0000EE;
+}
+/*Google Chrome、Safariへの対応*/
+.folder_urls table td.url .url-content::-webkit-scrollbar{
+    display: none;
+}
+.folder_urls a {
+    color: #000;
+    font-weight: 300;
 }
