@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user, UserMixin
 from __init__ import app, db, login_manager
+from urllib.parse import urlparse
 
 # ログイン状態を管理する
 @login_manager.user_loader
@@ -19,7 +20,7 @@ def index():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'GET':
-            return render_template('signin.html')
+        return render_template('signin.html')
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -71,7 +72,7 @@ def signup():
 def userpage():
     from models import Folder
     folders = Folder.query.filter_by(user_id=current_user.user_id).all()
-    return render_template('userpage.html', folders=folders)
+    return render_template('userpage.html',folders=folders)
 
 # フォルダから色を取得
 # folder = Folder.query.first()
@@ -106,10 +107,90 @@ def create_folder():
             return url_for('userpage')
 
 # urlを保存する
-@app.route('/addUrl')
+@app.route('/addUrl', methods=['GET', 'POST'])
 def add_url():
-    return render_template('add_url.html')
+    if request.method == 'GET':
+        from models import Folder
+        folders = Folder.query.filter_by(user_id=current_user.user_id).all() # ログインしているユーザーのIDからフォルダ情報を取得する
+        return render_template('add_url.html', folders=folders)
+    if request.method == 'POST':
+        # ユーザー情報を取得する
+        from models import Url
+        url = request.form['url']
+        name = request.form['name']
+        domain = urlparse(url).netloc.replace('www.', '')
+        folder_id = request.form['folder']
+        # ユーザー情報をdbテーブルに保存する
+        url = Url(url=url, url_name=name, domain=domain, folder_id=folder_id)
+        try:
+            db.session.add(url)
+            db.session.commit()
+            from models import Folder
+            folder = Folder.query.get(folder_id)
+            if folder:
+                return redirect(url_for('another_folder', folder_id=folder_id, folder_name=folder.folder_name))
+            else:
+                return redirect(url_for('add_url'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('add_url'))
 
+
+# フォルダを削除する
+@app.route('/delete_folder', methods=['GET', 'POST'])
+def delete_folder():
+    if request.method == 'GET':
+        from models import Folder
+        folders = Folder.query.filter_by(user_id=current_user.user_id).all() # ログインしているユーザーのIDからフォルダ情報を取得する
+        return render_template('delete_folder.html', folders=folders)
+    if request.method == 'POST':
+        from models import Folder
+        folder_id = request.form['folder']
+        folder = db.session.query(Folder).get(folder_id)
+        db.session.delete(folder)
+        db.session.commit()
+        return (url_for('userpage'))
+
+# urlを削除する
+@app.route('/delete_url', methods=['GET', 'POST'])
+def delete_url():
+    if request.method == 'GET':
+        return render_template('delete_url.html')
+    if request.method == 'POST':
+        pass
+        # from models import Folder
+        # folder_id = request.form['folder']
+        # folder = db.session.query(Folder).get(1)
+        # try:
+        #     db.session.delete(folder)
+        #     db.session.commit()
+        #     from models import Folder
+        #     folder = Folder.query.get(folder_id)
+        #     if folder:
+        #         return redirect(url_for('another_folder', folder_id=folder_id, folder_name=folder.folder_name))
+        #     else:
+        #         return redirect(url_for('add_url'))
+        # except Exception as e:
+        #     db.session.rollback()
+        #     flash(f'Error: {str(e)}', 'danger')
+        #     return redirect(url_for('add_url'))
+
+
+
+# フォルダ内のurlを閲覧する
+@app.route('/userpage/<int:folder_id>/<folder_name>', endpoint='another_folder')
+def folder(folder_id, folder_name):
+    from models import Folder
+    folder_name = folder_name.replace('<br>', ' ')
+    folder = Folder.query.filter_by(folder_id=folder_id).first()
+    if folder:
+        urls = folder.urls.all()
+        color = folder.folder_color.color
+        return render_template('browse_folder.html', folder=folder, urls=urls, color=color, folder_name=folder_name)
+    else:
+        # フォルダが見つからない場合の処理
+        return "Folder not found", 404
 
 # カラーテーブル変更用
 @app.route('/color', methods=['GET', 'POST'])
