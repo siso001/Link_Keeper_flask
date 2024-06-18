@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user, UserMixin
 from __init__ import app, db, login_manager
 from urllib.parse import urlparse
+from sqlalchemy import null
 
 # ログイン状態を管理する
 @login_manager.user_loader
@@ -121,7 +122,7 @@ def add_url():
         domain = urlparse(url).netloc.replace('www.', '')
         folder_id = request.form['folder']
         # ユーザー情報をdbテーブルに保存する
-        url = Url(url=url, url_name=name, domain=domain, folder_id=folder_id)
+        url = Url(user_id=current_user.user_id, url=url, url_name=name, domain=domain, folder_id=folder_id)
         try:
             db.session.add(url)
             db.session.commit()
@@ -135,6 +136,35 @@ def add_url():
             db.session.rollback()
             flash(f'Error: {str(e)}', 'danger')
             return redirect(url_for('add_url'))
+
+# urlをフォルダに保存
+@app.route('/addUrl-toFolder', methods=['GET', 'POST'])
+def add_url2():
+    if request.method == 'GET':
+        from models import Folder, Url
+        # ログインしているユーザーのIDからフォルダ、URL情報を取得する
+        folders = Folder.query.filter_by(user_id=current_user.user_id).all() 
+        urls = Url.query.filter_by(user_id=current_user.user_id, folder_id=0).all()
+        return render_template('add_url-to_folder.html', folders=folders, urls=urls)
+    if request.method == 'POST':
+        # ユーザー情報を取得する
+        from models import Url
+        url = request.form['url']
+        folder_id = request.form['folder']
+        url_record= db.session.query(Url).get(url) 
+        url_record.folder_id = folder_id
+        try:
+            db.session.commit()
+            from models import Folder
+            folder = Folder.query.get(folder_id)
+            if folder:
+                return redirect(url_for('another_folder', folder_id=folder_id, folder_name=folder.folder_name))
+            else:
+                return redirect(url_for('add_url2'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('add_url2'))
 
 
 # フォルダを削除する
@@ -211,4 +241,3 @@ def color():
             db.session.rollback()
             flash('そのメールアドレスはすでに登録されています')
             return render_template('color.html')
-

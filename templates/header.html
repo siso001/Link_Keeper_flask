@@ -1,6 +1,7 @@
 <!DOCTYPE html>
+<html lang="ja">
 <head>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@3.0.2/destyle.css">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
@@ -33,7 +34,8 @@
             background-image: url("{{ url_for('static', filename='img/gray.png') }}");
         }        
     </style>
-</head>
+</head>    
+</html>
 <body>
     <header class="header wrapper">    
         <a class="logo" href="{{ url_for('index') }}">

@@ -198,6 +198,16 @@ img::selection,
     display: flex; 
     justify-content: center;
 }
+select {
+    background: url("../img/chevron-down.svg") no-repeat right 12px center / 18px auto;    
+    border: solid 1px #bdbdbd;
+    padding: 6px 15px;
+    padding-right: 36px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #575757;
+    margin-bottom: 8px;
+}
 .signin-page img {
     width: 180px;
     height: 171px;

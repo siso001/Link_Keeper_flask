@@ -41,11 +41,12 @@ class Folder(db.Model):
 
 class Url(db.Model):
     __tablename__ = 'url'
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     url_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     url = db.Column(db.String(2550), nullable=False)
     url_name = db.Column(db.String(255), nullable=False)
     domain = db.Column(db.String(255), nullable=False)
-    folder_id = db.Column(db.Integer, db.ForeignKey('folder.folder_id', ondelete='CASCADE'), nullable=False, )
+    folder_id = db.Column(db.Integer, db.ForeignKey('folder.folder_id', ondelete='CASCADE'), nullable=False)
 
     def __repr__(self):
         return f"{self.url}"

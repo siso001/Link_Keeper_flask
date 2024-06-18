@@ -8,10 +8,11 @@
         <h2>urlを保存</h2>
         <form method="post">
                 <ul>
-                    <li><input type=text name=url  placeholder="url" class="text"></li>
                     <li><input type=text name=name  placeholder="name" class="text"></li>
+                    <li><input type=text name=url  placeholder="url" class="text"></li>
                     <li>
                         <select name="folder">
+                            <option value="0">フォルダに保存しない</option>
                         {% for folder in folders %}
                             <option value="{{ folder.folder_id }}">{{ folder.folder_name }}</option>
                         {% endfor %}
@@ -19,7 +20,8 @@
                     </li>
                 </ul>
             <div class="signin-button-div">
-                <input type="submit" value="Create" class="button">
+                <a href="{{ url_for('add_url2') }}">URLをフォルダに保存する場合</a>
+                <input type="submit" value="Add" class="button">
             </div>
         </form>
     </div>

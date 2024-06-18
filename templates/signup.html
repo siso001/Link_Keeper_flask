@@ -21,18 +21,6 @@
     </div>
 </div>
 
-<div class="error-massage">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-</div>
-
 <!-- <div class="container mt-4">
     <h2>データの追加だけ行うページ</h2>
     <form action="/signup" method="POST">
