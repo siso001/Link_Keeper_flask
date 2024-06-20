@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user, UserMixin
 from __init__ import app, db, login_manager
 from urllib.parse import urlparse
@@ -129,7 +129,7 @@ def add_url():
             from models import Folder
             folder = Folder.query.get(folder_id)
             if folder:
-                return redirect(url_for('another_folder', folder_id=folder_id, folder_name=folder.folder_name))
+                return redirect(url_for('folder', folder_id=folder_id, folder_name=folder.folder_name))
             else:
                 return redirect(url_for('add_url'))
         except Exception as e:
@@ -151,14 +151,14 @@ def add_url2():
         from models import Url
         url = request.form['url']
         folder_id = request.form['folder']
-        url_record= db.session.query(Url).get(url) 
+        url_record = db.session.query(Url).get(url) 
         url_record.folder_id = folder_id
         try:
             db.session.commit()
             from models import Folder
             folder = Folder.query.get(folder_id)
             if folder:
-                return redirect(url_for('another_folder', folder_id=folder_id, folder_name=folder.folder_name))
+                return redirect(url_for('folder', folder_id=folder_id, folder_name=folder.folder_name))
             else:
                 return redirect(url_for('add_url2'))
         except Exception as e:
@@ -180,7 +180,7 @@ def delete_folder():
         folder = db.session.query(Folder).get(folder_id)
         db.session.delete(folder)
         db.session.commit()
-        return (url_for('userpage'))
+        return redirect(url_for('userpage'))
 
 # urlを削除する
 @app.route('/delete_url', methods=['GET', 'POST'])
@@ -209,18 +209,28 @@ def delete_url():
 
 
 # フォルダ内のurlを閲覧する
-@app.route('/userpage/<int:folder_id>/<folder_name>', endpoint='another_folder')
+@app.route('/userpage/<int:folder_id>/<folder_name>', endpoint='folder', methods=['GET', 'POST'])
 def folder(folder_id, folder_name):
-    from models import Folder
-    folder_name = folder_name.replace('<br>', ' ')
-    folder = Folder.query.filter_by(folder_id=folder_id).first()
-    if folder:
-        urls = folder.urls.all()
-        color = folder.folder_color.color
-        return render_template('browse_folder.html', folder=folder, urls=urls, color=color, folder_name=folder_name)
-    else:
-        # フォルダが見つからない場合の処理
-        return "Folder not found", 404
+    if request.method == 'GET':
+        from models import Folder, Url
+        folder_name = folder_name.replace('<br>', ' ')
+        folder = Folder.query.filter_by(folder_id=folder_id).first()
+        if folder:
+            urls = folder.urls.all()
+            color = folder.folder_color.color
+            return render_template('browse_folder.html', folder=folder, urls=urls, color=color, folder_id=folder_id, folder_name=folder_name)
+        else:
+            # フォルダが見つからない場合の処理
+            return "Folder not found", 404
+    if request.method == 'POST':
+        data = request.get_json()
+        url_id = data.get('url_id')
+        from models import Url
+        url = db.session.query(Url).get(url_id)
+        if url:
+            db.session.delete(url)
+            db.session.commit()
+            return redirect(url_for('folder', folder_id=folder_id, folder_name=folder_name))
 
 # カラーテーブル変更用
 @app.route('/color', methods=['GET', 'POST'])
