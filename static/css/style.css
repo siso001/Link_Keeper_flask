@@ -432,16 +432,13 @@ select {
     margin: 8px 10px;
 }
 .folder_urls {
-    width: 75%;
+    width: 80%;
     margin: 0 auto;
 }
 .folder_urls table {
     text-align: center;
     border-collapse: separate;
     width: 100%; /* テーブルの幅を100%に設定 */
-}
-.folder_urls table tr:nth-child(2n+1) {
-    background: #d3d3d3;
 }
 .folder_urls table th {
     padding: 10px;
@@ -451,9 +448,11 @@ select {
 .folder_urls table td {
     padding: 10px;
     border: solid 1px #ffffff;
-    background: #e8e8e8;
     white-space: nowrap;
     overflow: hidden;
+}
+.folder_urls table td:not(.after) {
+    background: #e8e8e8;
 }
 .url {
     width: 75%;
@@ -484,4 +483,34 @@ select {
 .folder_urls a {
     color: #000;
     font-weight: 300;
+}
+.urls_tr {
+    position: relative;
+}
+.after {
+    width: 20px;
+    height: 20px;
+    background-image: url("../img/trash.svg");
+    background-size: contain;
+    vertical-align: middle;
+    position: absolute;
+    right: -26px;       
+    top: 50%; 
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.delete_url {
+    display: none;
+    background-color: white;
+    border-radius: 5px;
+    padding: 16px 32px;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 240px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    border: solid 1px #b6b6b6;
+    z-index: 20;
 }
