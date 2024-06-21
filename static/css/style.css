@@ -429,10 +429,22 @@ select {
     display: inline-block;
     font-size: 24px;
     width: auto;
-    margin: 8px 10px;
+}
+.folder_urls .before {
+    width: 28px;
+    height: 28px;
+    background-image: url("../img/folder.svg");
+    background-size: contain;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.folder_title {
+    display: flex;
+    align-items: center;
+    margin: 8px 10px 16px 4px;
 }
 .folder_urls {
-    width: 80%;
+    width: 82%;
     margin: 0 auto;
 }
 .folder_urls table {
@@ -459,11 +471,19 @@ select {
     max-width: 0.1em;
     overflow: hidden;
 }
-.folder_urls .url .url-content a, 
-.folder_urls .domain a {
+.domain {
+    width: 15%;
+    max-width: 0.1em;
+    overflow: hidden;
+}
+.folder {
+    max-width: 8%;
+}
+
+.url-content {
     text-decoration: underline;
 }
-.folder_urls table td.url .url-content {
+.url-content {
     display: block;
     overflow-x: auto;
     white-space: nowrap;

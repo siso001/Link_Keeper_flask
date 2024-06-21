@@ -1,0 +1,36 @@
+{% extends "header.html" %}
+
+{% block content %}
+    <!-- <script>
+        var folderId = parseInt('{{ folder_id }}');
+        var folderName = "{{ folder_name }}";
+    </script> -->
+    <main>
+        <div class="folder_urls">
+            <div class="folder_title">
+                <div class="before"></div>
+                <h1>{{ folder_name }}</h1>    
+            </div>
+            <table>
+                <tr>
+                    <th class="{{ color }}">名前</th>
+                    <th class="{{ color }} url">url</th> 
+                    <th class="{{ color }}">フォルダ</th>
+                    <th class="{{ color }}">ドメイン名</th>
+                </tr>
+                {% for url, folder_name in urls %}
+                <tr class="urls_tr">
+                    <td>{{ url.url_name }}</td>
+                    <td class="url"><div class="url-content"><a href="{{ url.url }}" target="_blank" rel="noopener noreferrer">{{ url.url }}</a></div></td>
+                    <td class="folder"><a target="_blank" rel="noopener noreferrer">{{ folder_name }}</a></td>
+                    <td class="domain"><div class="url-content"><a href="http://{{ url.domain }}" target="_blank" rel="noopener noreferrer">{{ url.domain }}</a></div></td>
+                    <td class="after" data-url-id="{{ url.url_id }}"></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <!-- <div class="delete_url">
+            <h1 id="delete_url_class">urlを削除しますか？</h1>
+        </div> -->
+    </main>
+{% endblock %}

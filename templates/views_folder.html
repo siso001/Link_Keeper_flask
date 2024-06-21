@@ -7,7 +7,10 @@
     </script>
     <main>
         <div class="folder_urls">
-            <h1>{{ folder_name }}</h1>
+            <div class="folder_title">
+                <div class="before"></div>
+                <h1>{{ folder_name }}</h1>    
+            </div>
             <table>
                 <tr>
                     <th class="{{ color }}">名前</th>
@@ -18,7 +21,7 @@
                 <tr class="urls_tr">
                     <td>{{ url.url_name }}</td>
                     <td class="url"><div class="url-content"><a href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ url }}</a></div></td>
-                    <td class="domain"><a href="http://{{ url.domain }}" target="_blank" rel="noopener noreferrer">{{ url.domain }}</a></td>
+                    <td class="domain"><div class="url-content"><a href="http://{{ url.domain }}" target="_blank" rel="noopener noreferrer">{{ url.domain }}</a></div></td>
                     <td class="after" data-url-id="{{ url.url_id }}"></td>
                 </tr>
                 {% endfor %}

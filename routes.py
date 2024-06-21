@@ -71,9 +71,10 @@ def signup():
 @app.route('/userpage')
 @login_required
 def userpage():
-    from models import Folder
+    from models import Folder, Url
     folders = Folder.query.filter_by(user_id=current_user.user_id).all()
-    return render_template('userpage.html',folders=folders)
+    url_count = Url.query.count()
+    return render_template('userpage.html',folders=folders, url_count=url_count)
 
 # フォルダから色を取得
 # folder = Folder.query.first()
@@ -206,7 +207,28 @@ def delete_url():
         #     flash(f'Error: {str(e)}', 'danger')
         #     return redirect(url_for('add_url'))
 
-
+# 登録してある全てのurlを閲覧する
+@app.route('/userpage/allurl', endpoint='allurl', methods=['GET', 'POST'])
+def view_all_urls():
+    if request.method == 'GET':
+        from models import Folder, Url
+        folder_name = "all_url"
+        all_urls = db.session.query(Url, Folder.folder_name).join(Folder, Url.folder_id == Folder.folder_id).all()
+        if all_urls:
+            color = "gray"
+            return render_template('views_all_url.html', folder=folder, urls=all_urls, color=color, folder_name=folder_name)
+        else:
+            # フォルダが見つからない場合の処理
+            return "Folder not found", 404
+    if request.method == 'POST':
+        data = request.get_json()
+        url_id = data.get('url_id')
+        from models import Url
+        url = db.session.query(Url).get(url_id)
+        if url:
+            db.session.delete(url)
+            db.session.commit()
+            return redirect(url_for('view_all_urls', folder_name=folder_name))
 
 # フォルダ内のurlを閲覧する
 @app.route('/userpage/<int:folder_id>/<folder_name>', endpoint='folder', methods=['GET', 'POST'])
@@ -218,7 +240,7 @@ def folder(folder_id, folder_name):
         if folder:
             urls = folder.urls.all()
             color = folder.folder_color.color
-            return render_template('browse_folder.html', folder=folder, urls=urls, color=color, folder_id=folder_id, folder_name=folder_name)
+            return render_template('views_folder.html', folder=folder, urls=urls, color=color, folder_id=folder_id, folder_name=folder_name)
         else:
             # フォルダが見つからない場合の処理
             return "Folder not found", 404
