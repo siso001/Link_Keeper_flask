@@ -213,7 +213,7 @@ def view_all_urls():
     if request.method == 'GET':
         from models import Folder, Url
         folder_name = "all_url"
-        all_urls = db.session.query(Url, Folder.folder_name).join(Folder, Url.folder_id == Folder.folder_id).all()
+        all_urls = db.session.query(Url, Folder.folder_name).outerjoin(Folder, Url.folder_id == Folder.folder_id).filter(Url.user_id == current_user.user_id).all()
         if all_urls:
             color = "gray"
             return render_template('views_all_url.html', folder=folder, urls=all_urls, color=color, folder_name=folder_name)
