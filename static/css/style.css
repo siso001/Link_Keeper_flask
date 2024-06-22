@@ -156,10 +156,13 @@ img::selection,
     margin-top: -32px;
     border: solid 1px #b6b6b6;
     z-index: 20;
-
     /* opacity: 0;
     transition: opacity 0.3s ease; */
 }
+.menu ul li:last-child {
+    border-bottom: none; 
+}
+
 /* .menu.show {
     opacity: 1;
     display: block; 
@@ -373,19 +376,32 @@ select {
 .create-menu{
     position: absolute;
     background-color: white;
-    border-radius: 3px;
-    padding: 4px 16px;
+    border-radius: 5px;
+    padding: 6px 16px;
     display: none;
     border: solid 1px #b6b6b6;
     margin: 32px 48px;
     z-index: 30;
 }
 .create-menu ul li{
-    margin: 8px 0;
-    padding: 0;
-    color: #373A40;
+    padding: 10px 4px;
+    /* color: #373A40; */
     font-weight: 100;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    color: #373A40;
 }
+.create-menu ul li:last-child {
+    border-bottom: none; 
+}
+.create-menu ul li a {
+    margin-left: 4px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
 .create-folder {
     display: none;
     position: absolute;
@@ -537,4 +553,23 @@ select {
     margin: 0 auto;
     border: solid 1px #b6b6b6;
     z-index: 20;
+}
+.create-menu ul li::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.create-menu ul li.create-folder-href::before {
+    background-image: url('../img/folder-plus.svg');
+}
+.create-menu ul li.add-url-href::before {
+    background-image: url('../img/link-2.svg');
+}
+.create-menu ul li.delete-folder-href::before {
+    background-image: url('../img/folder-minus.svg');
 }
