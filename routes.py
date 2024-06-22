@@ -1,15 +1,27 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify
-from flask_login import login_user, login_required, logout_user, current_user, UserMixin
-from __init__ import app, db, login_manager
-from urllib.parse import urlparse
-from sqlalchemy import null
+from __init__ import render_template, request, redirect, url_for, flash, jsonify,  urljoin, BeautifulSoup, requests, urlparse, login_user, login_required, logout_user, current_user, app, db, login_manager
 
 # ログイン状態を管理する
 @login_manager.user_loader
 def load_user(user_id):
-    from models import User
+    from model import User
     return User.query.get(int(user_id))
 
+def get_favicon_url(url):
+    # ウェブページのコンテンツを取得
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    
+    # リンクタグを検索してファビコンのURLを見つける
+    icon_link = soup.find('link', rel=lambda x: x and 'icon' in x)
+    
+    if icon_link:
+        favicon_url = icon_link['href']
+        # 相対URLを完全なURLに変換
+        favicon_url = urljoin(url, favicon_url)
+        return favicon_url
+    else:
+        # デフォルトのファビコンの場所を試す
+        return urljoin(url, '/favicon.ico')
 
 # LPページ
 @app.route('/')
@@ -26,7 +38,7 @@ def signin():
         email = request.form['email']
         password = request.form['password']
         # データベースからユーザーを取得
-        from models import User
+        from model import User
         user = User.query.filter_by(email=email).first()
         if user and user.password == password:
             # ログイン成功
@@ -51,7 +63,7 @@ def signup():
         return render_template('signup.html')
     if request.method == 'POST':
         # ユーザー情報を取得する
-        from models import User
+        from model import User
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
@@ -71,7 +83,7 @@ def signup():
 @app.route('/userpage')
 @login_required
 def userpage():
-    from models import Folder, Url
+    from model import Folder, Url
     folders = Folder.query.filter_by(user_id=current_user.user_id).all()
     url_count = Url.query.count()
     return render_template('userpage.html',folders=folders, url_count=url_count)
@@ -94,7 +106,7 @@ def create_folder():
         return render_template('create_folder.html')
     if request.method == 'POST':
         # ユーザー情報を取得する
-        from models import Folder
+        from model import Folder
         title = request.form['title']
         color = request.form['color']
         # ユーザー情報をdbテーブルに保存する
@@ -112,12 +124,12 @@ def create_folder():
 @app.route('/addUrl', methods=['GET', 'POST'])
 def add_url():
     if request.method == 'GET':
-        from models import Folder
+        from model import Folder
         folders = Folder.query.filter_by(user_id=current_user.user_id).all() # ログインしているユーザーのIDからフォルダ情報を取得する
         return render_template('add_url.html', folders=folders)
     if request.method == 'POST':
         # ユーザー情報を取得する
-        from models import Url
+        from model import Url
         url = request.form['url']
         name = request.form['name']
         domain = urlparse(url).netloc.replace('www.', '')
@@ -127,7 +139,7 @@ def add_url():
         try:
             db.session.add(url)
             db.session.commit()
-            from models import Folder
+            from model import Folder
             folder = Folder.query.get(folder_id)
             if folder:
                 return redirect(url_for('folder', folder_id=folder_id, folder_name=folder.folder_name))
@@ -142,21 +154,21 @@ def add_url():
 @app.route('/addUrl-toFolder', methods=['GET', 'POST'])
 def add_url2():
     if request.method == 'GET':
-        from models import Folder, Url
+        from model import Folder, Url
         # ログインしているユーザーのIDからフォルダ、URL情報を取得する
         folders = Folder.query.filter_by(user_id=current_user.user_id).all() 
         urls = Url.query.filter_by(user_id=current_user.user_id, folder_id=0).all()
         return render_template('add_url-to_folder.html', folders=folders, urls=urls)
     if request.method == 'POST':
         # ユーザー情報を取得する
-        from models import Url
+        from model import Url
         url = request.form['url']
         folder_id = request.form['folder']
         url_record = db.session.query(Url).get(url) 
         url_record.folder_id = folder_id
         try:
             db.session.commit()
-            from models import Folder
+            from model import Folder
             folder = Folder.query.get(folder_id)
             if folder:
                 return redirect(url_for('folder', folder_id=folder_id, folder_name=folder.folder_name))
@@ -172,11 +184,11 @@ def add_url2():
 @app.route('/delete_folder', methods=['GET', 'POST'])
 def delete_folder():
     if request.method == 'GET':
-        from models import Folder
+        from model import Folder
         folders = Folder.query.filter_by(user_id=current_user.user_id).all() # ログインしているユーザーのIDからフォルダ情報を取得する
         return render_template('delete_folder.html', folders=folders)
     if request.method == 'POST':
-        from models import Folder
+        from model import Folder
         folder_id = request.form['folder']
         folder = db.session.query(Folder).get(folder_id)
         db.session.delete(folder)
@@ -211,7 +223,7 @@ def delete_url():
 @app.route('/userpage/allurl', endpoint='allurl', methods=['GET', 'POST'])
 def view_all_urls():
     if request.method == 'GET':
-        from models import Folder, Url
+        from model import Folder, Url
         folder_name = "all_url"
         all_urls = db.session.query(Url, Folder.folder_name).outerjoin(Folder, Url.folder_id == Folder.folder_id).filter(Url.user_id == current_user.user_id).all()
         if all_urls:
@@ -223,7 +235,7 @@ def view_all_urls():
     if request.method == 'POST':
         data = request.get_json()
         url_id = data.get('url_id')
-        from models import Url
+        from model import Url
         url = db.session.query(Url).get(url_id)
         if url:
             db.session.delete(url)
@@ -234,7 +246,7 @@ def view_all_urls():
 @app.route('/userpage/<int:folder_id>/<folder_name>', endpoint='folder', methods=['GET', 'POST'])
 def folder(folder_id, folder_name):
     if request.method == 'GET':
-        from models import Folder, Url
+        from model import Folder, Url
         folder_name = folder_name.replace('<br>', ' ')
         folder = Folder.query.filter_by(folder_id=folder_id).first()
         if folder:
@@ -247,7 +259,7 @@ def folder(folder_id, folder_name):
     if request.method == 'POST':
         data = request.get_json()
         url_id = data.get('url_id')
-        from models import Url
+        from model import Url
         url = db.session.query(Url).get(url_id)
         if url:
             db.session.delete(url)
@@ -261,7 +273,7 @@ def color():
         return render_template('color.html')
     if request.method == 'POST':
         # ユーザー情報を取得する
-        from models import FolderColor
+        from model import FolderColor
         colorname = request.form['colorname']
         # ユーザー情報をdbテーブルに保存する
         folder_color = FolderColor(color=colorname)
