@@ -14,7 +14,7 @@
                         <select name="folder">
                             <option value="0">フォルダに保存しない</option>
                         {% for folder in folders %}
-                            <option value="{{ folder.folder_id }}">{{ folder.folder_name }}</option>
+                            <option value="{{ folder.folder_id }}">{{ (folder.folder_name or 'No Folder') | replace('<br>', ' ') }}</option>
                         {% endfor %}
                         </select>
                     </li>
