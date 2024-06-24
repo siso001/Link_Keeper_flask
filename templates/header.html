@@ -9,15 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/function.js') }}"></script>
     <style>
-        body {
-            font-family: 
-                "Hiragino Kaku Gothic ProN",
-                "Helvetica Neue",
-                Arial,
-                "Hiragino Sans",
-                Meiryo,
-                sans-serif;
-        }        
         .backgroundimage-red {
             background-image: url("{{ url_for('static', filename='img/red.png') }}");
         }
@@ -38,48 +29,50 @@
 </html>
 <body>
     <header class="header wrapper">    
-        <a class="logo" href="{{ url_for('index') }}">
-            <img  src="{{ url_for('static', filename='img/Link-keeper.svg') }}">
-        </a>
-        <a class="user">
-            {% if current_user.is_authenticated %}
-                <h2>{{ current_user.username }}</h2>
-            {% else %}    
-                <h2>Guest</h2>
-            {% endif %}            
-        <img src="{{ url_for('static', filename='img/arrow.svg') }}">
-        </a>
+            <a class="logo" href="{{ url_for('index') }}">
+                <img  src="{{ url_for('static', filename='img/Link-keeper.svg') }}">
+            </a>
+            <a class="user">
+                {% if current_user.is_authenticated %}
+                    <h2>{{ current_user.username }}</h2>
+                {% else %}    
+                    <h2>Guest</h2>
+                {% endif %}            
+            <img src="{{ url_for('static', filename='img/arrow.svg') }}">
+            </a>    
     </header>
     <div class="menu">
-        <ul>
-            {% if current_user.is_authenticated %}
-            <li>
-                <a class="signin-menu" href="{{ url_for('userpage') }}">
-                    <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-page">
-                    <p>My Page</p>
-                </a>    
-            </li>
-            <li>
-                <a class="signup-menu" href="{{ url_for('logout') }}">
-                    <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
-                    <p>Sign Out</p>
-                </a>    
-            </li>
-            {% else %}
-            <li>
-                <a class="signin-menu" href="{{ url_for('signin') }}">
-                    <img src="{{ url_for('static', filename='img/sign-in.svg') }}" alt="log-in">
-                    <p>Sign In</p>
-                </a>    
-            </li>
-            <li>
-                <a class="signup-menu" href="{{ url_for('signup') }}">
-                    <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
-                    <p>Sign Up</p>
-                </a>
-    
-            </li>
-            {% endif %}
+        <nav>  
+            <ul>
+                {% if current_user.is_authenticated %}
+                <li>
+                    <a class="signin-menu" href="{{ url_for('userpage') }}">
+                        <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-page">
+                        <p>My Page</p>
+                    </a>    
+                </li>
+                <li>
+                    <a class="signup-menu" href="{{ url_for('logout') }}">
+                        <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
+                        <p>Sign Out</p>
+                    </a>    
+                </li>
+                {% else %}
+                <li>
+                    <a class="signin-menu" href="{{ url_for('signin') }}">
+                        <img src="{{ url_for('static', filename='img/sign-in.svg') }}" alt="log-in">
+                        <p>Sign In</p>
+                    </a>    
+                </li>
+                <li>
+                    <a class="signup-menu" href="{{ url_for('signup') }}">
+                        <img src="{{ url_for('static', filename='img/user-plus.svg') }}" alt="user-plus">
+                        <p>Sign Up</p>
+                    </a>
+        
+                </li>
+                {% endif %}
+        </nav>
 
         </ul>
     </div>

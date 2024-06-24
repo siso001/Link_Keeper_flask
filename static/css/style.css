@@ -23,6 +23,7 @@
     background: var(--gray);
 }
 body {
+    font-family: "Hiragino Kaku Gothic ProN", "Helvetica Neue", Arial, "Hiragino Sans", Meiryo, sans-serif;
     margin: 0px;
     padding: 0px;
 }
@@ -52,7 +53,7 @@ input::selection {
 }
 img::selection,
 .toolbar-button-icon p::selection {
-    background-color: #ffffff00;
+    background-color: #ffffff;
 }
 .button {
     display: inline-block;
@@ -96,7 +97,7 @@ img::selection,
     align-items: center; 
 } 
 
-.header {
+header {
     display: flex;
     align-items: center;
     position:relative;
@@ -390,7 +391,6 @@ select {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #e0e0e0;
-    color: #373A40;
 }
 .create-menu ul li:last-child {
     border-bottom: none; 
@@ -400,6 +400,7 @@ select {
     display: flex;
     align-items: center;
     font-weight: bold;
+    color: #373A40;
 }
 
 .create-folder {
