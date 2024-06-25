@@ -201,6 +201,12 @@ header {
     align-items: center;
     display: flex; 
     justify-content: center;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
 }
 select {
     background: url("../img/chevron-down.svg") no-repeat right 12px center / 18px auto;    
@@ -326,6 +332,10 @@ select {
 .folder-litter-div a img {
     width: 16px;
     vertical-align: middle; 
+}
+.feather-edit {
+    float: right;
+    margin: 0 0 0 64px;
 }
 .folder-box h2 {
     margin-left: 8px;
@@ -531,7 +541,7 @@ select {
 .after {
     width: 20px;
     height: 20px;
-    background-image: url("../img/trash.svg");
+    background-image: url("../img/edit.svg");
     background-size: contain;
     vertical-align: middle;
     position: absolute;
@@ -573,4 +583,7 @@ select {
 }
 .create-menu ul li.delete-folder-href::before {
     background-image: url('../img/folder-minus.svg');
+}
+.popup {
+    cursor: pointer;
 }

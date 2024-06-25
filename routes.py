@@ -97,28 +97,35 @@ def userpage():
 # for folder in folder_color.folders:
 #     print(folder.folder_name)  # その色のフォルダ名を取得
 
+class InvalidTitleError(Exception):
+    pass
 
+def is_valid_title(title):
+    if not title.strip():
+        raise InvalidTitleError("error: タイトルが無効です。")
 
 # フォルダーを作成する
-@app.route('/create_folder', methods=['GET', 'POST'])
+@app.route('/create_folder', methods=['POST'])
 def create_folder():
-    if request.method == 'GET':
-        return render_template('create_folder.html')
-    if request.method == 'POST':
-        # ユーザー情報を取得する
-        from model import Folder
-        title = request.form['title']
-        color = request.form['color']
-        # ユーザー情報をdbテーブルに保存する
-        folder = Folder(user_id=current_user.user_id, folder_name=title, folder_color_id=color)
-        try:
-            db.session.add(folder)
-            db.session.commit()
-            return redirect(url_for('userpage'))
-        except:
-            db.session.rollback()
-            flash('フォルダの作成中にエラーが発生しました')
-            return url_for('userpage')
+    # ユーザー情報を取得する
+    from model import Folder
+    title = request.form['title']
+    color = request.form['color']
+    # ユーザー情報をdbテーブルに保存する
+    folder = Folder(user_id=current_user.user_id, folder_name=title, folder_color_id=color)
+    try:
+        is_valid_title(title)   
+        db.session.add(folder)
+        db.session.commit()
+        return redirect(url_for('userpage'))
+    except InvalidTitleError as e:
+        db.session.rollback()
+        flash(str(e), 'error')
+    except Exception as e:
+        db.session.rollback()
+        flash('フォルダの作成中にエラーが発生しました', 'error')
+    return redirect(url_for('userpage'))
+
 
 # urlを保存する
 @app.route('/addUrl', methods=['GET', 'POST'])
