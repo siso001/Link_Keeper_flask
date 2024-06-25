@@ -73,18 +73,16 @@ $(document).ready(function() {
     });
 
     // URL編集ポップアップを開く
-    // $(".edit-url").click(function(e) {
-    //     e.preventDefault();
-    //     var urlId = $(this).data('url-id');
-    //     var urlName = $(this).data('url-name');
-    //     var urlAddress = $(this).data('url-address');
-    //     var folderId = $(this).data('folder-id');
-    //     $("#edit-url-id").val(urlId);
-    //     $("#edit-url-name").val(urlName);
-    //     $("#edit-url-address").val(urlAddress);
-    //     $("#edit-url-folder").val(folderId);
-    //     $("#edit-url-popup").fadeIn();
-    // });
+    $(".add-url-href").click(function(e) {
+        e.preventDefault();
+        var urlId = $(this).data('url-id');
+        var urlName = $(this).data('url-name');
+        var urlAddress = $(this).data('url-address');
+        var folderId = $(this).data('folder-id');
+        $("#add-url-name").val(urlName);
+        $("#add-url-folder").val(folderId);
+        $("#add-url-popup").fadeIn();
+    });
 
     // ポップアップを閉じる
     $(".close-popup").click(function() {
@@ -92,9 +90,9 @@ $(document).ready(function() {
     });
 
     // ポップアップの外側をクリックしたときに閉じる
-    // $(document).click(function(e) {
-    //     if (!$(e.target).closest('.popup, .edit-folder, .edit-url').length) {
-    //         $(".popup").fadeOut();
-    //     }
-    // });
+    $(document).click(function(e) {
+        if (!$(e.target).closest('.popup, .menu-click').length) {
+            $(".popup").fadeOut();
+        }
+    });
 });

@@ -128,34 +128,29 @@ def create_folder():
 
 
 # urlを保存する
-@app.route('/addUrl', methods=['GET', 'POST'])
+@app.route('/addUrl', methods=['POST'])
 def add_url():
-    if request.method == 'GET':
-        from model import Folder
-        folders = Folder.query.filter_by(user_id=current_user.user_id).all() # ログインしているユーザーのIDからフォルダ情報を取得する
-        return render_template('add_url.html', folders=folders)
-    if request.method == 'POST':
-        # ユーザー情報を取得する
-        from model import Url
-        url = request.form['url']
-        name = request.form['name']
-        domain = urlparse(url).netloc.replace('www.', '')
-        folder_id = request.form['folder']
-        # ユーザー情報をdbテーブルに保存する
-        url = Url(user_id=current_user.user_id, url=url, url_name=name, domain=domain, folder_id=folder_id)
-        try:
-            db.session.add(url)
-            db.session.commit()
-            from model import Folder
-            folder = Folder.query.get(folder_id)
-            if folder:
-                return redirect(url_for('folder', folder_id=folder_id, folder_name=folder.folder_name))
-            else:
-                return redirect(url_for('add_url'))
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error: {str(e)}', 'danger')
+    # ユーザー情報を取得する
+    from model import Url, Folder
+    folders = Folder.query.filter_by(user_id=current_user.user_id).all()
+    url = request.form['url']
+    name = request.form['name']
+    domain = urlparse(url).netloc.replace('www.', '')
+    folder_id = request.form['folder']
+    # ユーザー情報をdbテーブルに保存する
+    url = Url(user_id=current_user.user_id, url=url, url_name=name, domain=domain, folder_id=folder_id)
+    try:
+        db.session.add(url)
+        db.session.commit()
+        folder = Folder.query.get(folder_id)
+        if folder:
+            return redirect(url_for('folder', folder_id=folder_id, folder_name=folder.folder_name))
+        else:
             return redirect(url_for('add_url'))
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error: {str(e)}', 'danger')
+        return redirect(url_for('add_url'))
 
 # urlをフォルダに保存
 @app.route('/addUrl-toFolder', methods=['GET', 'POST'])

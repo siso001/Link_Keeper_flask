@@ -1,15 +1,10 @@
-{% extends "header.html" %}
-
-{% block content %}
-<div id="signin" class="signin-page wrapper">
-    <img src="{{ url_for('static', filename='img/icon.svg') }}">
-    <div class="border"></div>
+<div id="add-url-popup" class="signin-page popup wrapper" style="display: none;">
     <div class="signin-page-form">
         <h2>urlを保存</h2>
-        <form method="post">
+        <form method="post" action="{{ url_for('add_url') }}">
                 <ul>
-                    <li><input type=text name=name  placeholder="name" class="text"></li>
-                    <li><input type=text name=url  placeholder="url" class="text"></li>
+                    <li><input id="add-url-name" type=text name=name  placeholder="name" class="text"></li>
+                    <li><input id="add-url-" type=text name=url  placeholder="url" class="text"></li>
                     <li>
                         <select name="folder">
                             <option value="0">フォルダに保存しない</option>
@@ -26,4 +21,3 @@
         </form>
     </div>
 </div>
-{% endblock %}

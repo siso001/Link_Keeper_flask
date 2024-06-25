@@ -194,9 +194,10 @@ header {
 .signin-page {
     margin: 120px auto;
     width: fit-content;
-    border-radius: 20px;
+    border-radius: 8px;
     padding: 48px 32px;
-    border: solid 2px #bdbdbd;
+    /* border: solid 1px #bdbdbd; */
+    box-shadow: 0px 0px 10px -5px #777777;
     display: flex;
     align-items: center;
     display: flex; 
@@ -585,5 +586,5 @@ select {
     background-image: url('../img/folder-minus.svg');
 }
 .popup {
-    cursor: pointer;
+    cursor: auto;
 }
