@@ -1,4 +1,7 @@
 @charset "UTF-8";
+
+/* Color styles */
+
 :root {
     --red: #BF3131;
     --yellow: #F6AE2D;
@@ -22,402 +25,7 @@
 .backgroundcolor-gray {
     background: var(--gray);
 }
-body {
-    font-family: "Hiragino Kaku Gothic ProN", "Helvetica Neue", Arial, "Hiragino Sans", Meiryo, sans-serif;
-    margin: 0px;
-    padding: 0px;
-}
-h1, h2 {
-    font-weight: bold;
-}
-.wrapper {
-    margin: 32px 120px;
-}
-input, ul, li, h2{
-	margin: 0;
-	padding: 0;
-	background: none;
-	border: none;
-	border-radius: 0;
-	outline: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-    list-style: none;
-}
-h2::selection,
-a::selection,
-p::selection,
-input::selection {
-    background:#9f9f9f80;
-}
-img::selection,
-.toolbar-button-icon p::selection {
-    background-color: #ffffff;
-}
-.button {
-    display: inline-block;
-    border-radius: 5px; 
-    font-size: 20px;       
-    text-align: center;      
-    cursor: pointer;    
-    padding: 10px 20px;   
-    background: #FFB827;    
-    color: #ffffff;   
-    transition: .3s;      
-    border: 2px solid #FFB827;    
-    margin: 0 0 0 auto;
-}
-.button:active {
-    color: #FFB827;  
-    background: #ffffff;  
-}
-.logo img{
-    height: 56px;
-    width: auto;
-}
-.user img {
-    height: 10px;
-    width: auto;
-    margin-left: 8px;
-}
-.user h2 {
-    font-size: 18px;
-}
-.user {
-    align-items: center;
-    display: flex;
-    position: absolute; 
-    /* absoluteはimgタグではなく親要素のdivに追加する */
-    right: 0;
-    text-decoration: none;
-    color: black;
-    transition: 0.4s;
-    justify-content: center; 
-    align-items: center; 
-} 
 
-header {
-    display: flex;
-    align-items: center;
-    position:relative;
-    z-index: 10;
-}
-.alert {
-    position: absolute;
-    bottom: 20px; 
-    left: 50%;
-    transform: translateX(-50%); 
-    padding: 10px 20px;
-    z-index: 1000;
-}
-.box {
-    background: #D9D9D9;
-    width: 100%;
-    aspect-ratio: 7 / 3;    
-}
-.intr {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 152px; /* wrapper margin(120px) + 追加のマージン(32px) */
-}
-.intr h1 {
-    font-size: 64px;
-    margin: 48px 0 0 0;
-}
-.intr p {
-    font-size: 28px;
-    font-weight: bold;
-    color: #7E8083;
-}
-.intr-button1 {
-    background: #373A40;
-    border: 2px solid #373A40;
-    font-weight: bold;
-}
-.intr-button1:active {
-    color: #373A40;
-}
-.intr-button2 {
-    background: #F6AE2D;
-    border: 2px solid #F6AE2D;    
-    font-weight: bold;
-}
-.intr-button2:active {
-    color: #F6AE2D;  
-}
-
-.menu{
-    display: none;
-    background-color: white;
-    border-radius: 5px;
-    padding: 0 16px;
-    position: absolute;
-    right: 84.5px;
-    margin-top: -32px;
-    border: solid 1px #b6b6b6;
-    z-index: 20;
-    /* opacity: 0;
-    transition: opacity 0.3s ease; */
-}
-.menu ul li:last-child {
-    border-bottom: none; 
-}
-
-/* .menu.show {
-    opacity: 1;
-    display: block; 
-}
- */
-.user:hover {
-    opacity: 0.5;
-}
-.signin-menu:hover, .signup-menu:hover {
-    opacity: 0.5;
-}
-.menu p{
-    font-weight:bold;
-    color: black;
-    margin-left: 8px;
-}
-.signin-menu, .signup-menu {
-    display: inline-flex;
-    align-items: center;
-    margin: 14px 0;
-}
-.signin-menu {
-    margin-bottom: 0;
-}
-
-/* ======= */
-
-.signin-page {
-    margin: 120px auto;
-    width: fit-content;
-    border-radius: 8px;
-    padding: 48px 32px;
-    /* border: solid 1px #bdbdbd; */
-    box-shadow: 0px 0px 10px -5px #777777;
-    display: flex;
-    align-items: center;
-    display: flex; 
-    justify-content: center;
-    background-color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-}
-select {
-    background: url("../img/chevron-down.svg") no-repeat right 12px center / 18px auto;    
-    border: solid 1px #bdbdbd;
-    padding: 6px 15px;
-    padding-right: 36px;
-    border-radius: 5px;
-    font-size: 15px;
-    color: #575757;
-    margin-bottom: 8px;
-}
-.signin-page img {
-    width: 180px;
-    height: 171px;
-    margin: 0 36px;
-}
-.border {
-    width: 2px;
-    background:#E6E6E6;
-    margin: 0 20px;
-}
-#signin .border  {
-    height: 180px;
-}
-#signup .border {
-    height: 240px;
-}
-.signin-page-form {
-    margin: 0 20px;
-}
-.signin-page h2 {
-    font-size: 20px;
-    color: #565656;
-    margin-bottom: 20px;
-}
-.text {
-    width: 366px;
-    height: 40px;
-    border: solid 1px #FFB827;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin-bottom: 18px;
-    font-size: 16px;
-    color: #565656;
-}
-.signin-button-div {
-    display: flex;
-    align-items: center;
-}
-.error-massage {
-    color: #bd3f3f;
-    margin: 16px auto;
-    height: 32px;
-    text-align: center;
-}
-
-/* ======= */
-.folder-box {
-    position: relative;
-    background-color: #D9D9D9;
-    max-width: 75%;
-    width: auto;
-    height: auto;
-    float: left;
-    padding: 16px;
-    border-radius: 8px;
-    margin: 32px 64px;
-    z-index: 1;
-    /* margin: 32px 0 32px 64px; */
-}
-.folder-box-div {
-    margin: 8px 0 0 8px;
-    width: 100%;
-    overflow-x: scroll;
-    white-space: nowrap;
-    display: flex;
-}
-.folder-litter {
-    width: 150px;
-    background-size: cover; 
-    background-size: contain; 
-    background-repeat: no-repeat;
-    display: inline-block;
-    flex-direction: column;
-    padding: 8px;
-    box-sizing: border-box;
-    flex-shrink: 0; /* 幅を超えて縮まないように */
-    margin: 6px 16px 0 0;
-}
-.folder-litter p, 
-.folder-litter a {
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    padding: 0;
-    margin: 0;
-}
-.folder-title {
-    margin: 18px 0 0 10px;
-    width: 128px;
-    height: 18px;
-    word-wrap: break-word; 
-    white-space: normal;
-}
-.folder-title br {
-    margin-bottom: 3px;
-}
-.folder-title p{
-    word-break: break-all;
-}
-.folder-litter-div {
-    display: inline-block;
-    width: auto;
-    margin: 48px 0 4px 10px;
-    vertical-align: middle; 
-}
-.folder-litter-div-a {
-    margin-left: 2px;
-    margin-bottom: 1px;
-    vertical-align: middle; 
-    height: 16px;
-}
-.folder-litter-div a img {
-    width: 16px;
-    vertical-align: middle; 
-}
-.feather-edit {
-    float: right;
-    margin: 0 0 0 64px;
-}
-.folder-box h2 {
-    margin-left: 8px;
-    font-size: 22px;
-}
-
-.user-main {
-    display: flex;
-    position: relative;
-    z-index: 1;
-}
-.toolbar {
-    margin: 32px 48px;
-    width: 15%;
-}
-.toolbar-button {
-    /* background-image: linear-gradient(#fff, #000); */
-    background: #373A40;
-    border: 2px solid #373A40;
-    font-weight: bold;
-    border-radius: 10px;
-    color: white;
-    width: auto;
-    padding: 16px;
-    display: inline-block;
-    transition: .3s;
-    text-align: center;      
-    cursor: pointer;
-}
-.toolbar-button:active{
-    color: #373A40;  
-    background: #ffffff;  
-}
-.toolbar-button-icon svg {
-    stroke: #ffffff;
-    transition: .3s;
-    cursor: pointer;
-}
-.toolbar-button:active .toolbar-button-icon svg {
-    stroke: #373A40;
-}
-.toolbar-button-icon {
-    display: flex;
-    align-items: center;
-}
-.toolbar-button-icon p {
-    margin-left: 4px;
-}
-.create-menu{
-    position: absolute;
-    background-color: white;
-    border-radius: 5px;
-    padding: 6px 16px;
-    display: none;
-    border: solid 1px #b6b6b6;
-    margin: 32px 48px;
-    z-index: 30;
-}
-.create-menu ul li{
-    padding: 10px 4px;
-    /* color: #373A40; */
-    font-weight: 100;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #e0e0e0;
-}
-.create-menu ul li:last-child {
-    border-bottom: none; 
-}
-.create-menu ul li a {
-    margin-left: 4px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    color: #373A40;
-}
-
-.create-folder {
-    display: none;
-    position: absolute;
-}
 .red p::selection,
 .red a::selection {
     background-color:#832121;
@@ -443,21 +51,504 @@ select {
     background:#636363;
     color:#fff;
 }
+
+/* General styles */
+
+body {
+    font-family: "Hiragino Kaku Gothic ProN", "Helvetica Neue", Arial, "Hiragino Sans", Meiryo, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
+
+h1, h2 {
+    font-weight: bold;
+}
+
+.wrapper {
+    margin: 32px 120px;
+}
+
+.feather-edit {
+    float: right;
+    margin: 0 0 0 64px;
+}
+
+/* Reset styles */
+
+input, ul, li, h2{
+	margin: 0;
+	padding: 0;
+	background: none;
+	border: none;
+	border-radius: 0;
+	outline: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+    list-style: none;
+}
+
+h2::selection,
+a::selection,
+p::selection,
+input::selection {
+    background:#9f9f9f80;
+}
+
+img::selection,
+.toolbar-button-icon p::selection {
+    background-color: #ffffff;
+}
+
+/* Button styles */
+
+.button {
+    display: inline-block;
+    border-radius: 5px; 
+    font-size: 20px;       
+    text-align: center;      
+    cursor: pointer;    
+    padding: 10px 20px;   
+    background: #FFB827;    
+    color: #ffffff;   
+    transition: .3s;      
+    border: 2px solid #FFB827;    
+    margin: 0 0 0 auto;
+}
+
+.button:active {
+    color: #FFB827;  
+    background: #ffffff;  
+}
+
+/* Header and alert styles */
+
+header {
+    display: flex;
+    align-items: center;
+    position:relative;
+    z-index: 10;
+}
+
+.logo img{
+    height: 56px;
+    width: auto;
+}
+
+.alert {
+    position: absolute;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    padding: 10px 20px;
+    z-index: 1000;
+}
+
+/* Logo and menu styles */
+
+.user img {
+    height: 10px;
+    width: auto;
+    margin-left: 8px;
+}
+
+.user h2 {
+    font-size: 18px;
+}
+
+.user {
+    align-items: center;
+    display: flex;
+    position: absolute; 
+    /* absoluteはimgタグではなく親要素のdivに追加する */
+    right: 0;
+    text-decoration: none;
+    color: black;
+    transition: 0.4s;
+    justify-content: center; 
+    align-items: center; 
+} 
+
+.menu {
+    display: none;
+    background-color: white;
+    border-radius: 5px;
+    padding: 0 16px;
+    position: absolute;
+    right: 84.5px;
+    margin-top: -32px;
+    border: solid 1px #b6b6b6;
+    z-index: 20;
+    /* opacity: 0;
+    transition: opacity 0.3s ease; */
+}
+
+.menu ul li:last-child {
+    border-bottom: none; 
+}
+
+.user:hover {
+    opacity: 0.5;
+}
+
+.signin-menu:hover, .signup-menu:hover {
+    opacity: 0.5;
+}
+
+.menu p{
+    font-weight:bold;
+    color: black;
+    margin-left: 8px;
+}
+
+.signin-menu, .signup-menu {
+    display: inline-flex;
+    align-items: center;
+    margin: 14px 0;
+}
+
+.signin-menu {
+    margin-bottom: 0;
+}
+
+
+/* Index styles */
+
+.box {
+    background: #D9D9D9;
+    width: 100%;
+    aspect-ratio: 7 / 3;    
+}
+
+.intr {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 152px; /* wrapper margin(120px) + 追加のマージン(32px) */
+}
+
+.intr h1 {
+    font-size: 64px;
+    margin: 48px 0 0 0;
+}
+
+.intr p {
+    font-size: 28px;
+    font-weight: bold;
+    color: #7E8083;
+}
+
+.intr-button1 {
+    background: #373A40;
+    border: 2px solid #373A40;
+    font-weight: bold;
+}
+
+.intr-button1:active {
+    color: #373A40;
+}
+
+.intr-button2 {
+    background: #F6AE2D;
+    border: 2px solid #F6AE2D;    
+    font-weight: bold;
+}
+
+.intr-button2:active {
+    color: #F6AE2D;  
+}
+
+
+/* Popup styles */
+
+.signin-page {
+    margin: 120px auto;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 48px 32px;
+    /* border: solid 1px #bdbdbd; */
+    box-shadow: 0px 0px 12px -4px #777777;
+    display: flex;
+    align-items: center;
+    display: flex; 
+    justify-content: center;
+    background-color: #fff;
+    z-index: 1000;
+}
+
+select {
+    background: url("../img/chevron-down.svg") no-repeat right 12px center / 18px auto;    
+    border: solid 1px #bdbdbd;
+    padding: 6px 15px;
+    padding-right: 36px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #575757;
+    margin-bottom: 8px;
+}
+
+.signin-page img {
+    width: 180px;
+    height: 171px;
+    margin: 0 36px;
+}
+
+.border {
+    width: 2px;
+    background:#E6E6E6;
+    margin: 0 20px;
+}
+
+.signin-page-form {
+    margin: 0 20px;
+}
+
+.signin-page h2 {
+    font-size: 20px;
+    color: #565656;
+    margin-bottom: 20px;
+}
+
+.text {
+    width: 366px;
+    height: 40px;
+    border: solid 1px #FFB827;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-bottom: 18px;
+    font-size: 16px;
+    color: #565656;
+}
+
+.signin-button-div {
+    display: flex;
+    align-items: center;
+}
+
+.error-massage {
+    color: #bd3f3f;
+    margin: 16px auto;
+    height: 32px;
+    text-align: center;
+}
+
+/* Userpage styles */
+
+.user-main {
+    display: flex;
+    position: relative;
+    z-index: 1;
+}
+
+/* Toolbar styles */
+
+.toolbar {
+    margin: 32px 48px;
+    width: 15%;
+}
+
+.toolbar-button {
+    /* background-image: linear-gradient(#fff, #000); */
+    background: #373A40;
+    border: 2px solid #373A40;
+    font-weight: bold;
+    border-radius: 10px;
+    color: white;
+    width: auto;
+    padding: 16px;
+    display: inline-block;
+    transition: .3s;
+    text-align: center;      
+    cursor: pointer;
+}
+
+.toolbar-button:active{
+    color: #373A40;  
+    background: #ffffff;  
+}
+
+.toolbar-button-icon svg {
+    stroke: #ffffff;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.toolbar-button:active .toolbar-button-icon svg {
+    stroke: #373A40;
+}
+
+.toolbar-button-icon {
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-button-icon p {
+    margin-left: 4px;
+}
+
+/* edit_menu styles */
+
+.create-menu{
+    position: absolute;
+    background-color: white;
+    border-radius: 5px;
+    padding: 6px 16px;
+    display: none;
+    border: solid 1px #b6b6b6;
+    margin: 32px 48px;
+    z-index: 30;
+}
+
+.create-menu ul li{
+    padding: 10px 4px;
+    /* color: #373A40; */
+    font-weight: 100;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+.create-menu ul li:last-child {
+    border-bottom: none; 
+}
+
+.create-menu ul li::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.create-menu ul li a {
+    margin-left: 4px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #373A40;
+}
+
+.create-menu ul li.create-folder-href::before {
+    background-image: url('../img/folder-plus.svg');
+}
+
+.create-menu ul li.add-url-href::before {
+    background-image: url('../img/link-2.svg');
+}
+
+.create-menu ul li.delete-folder-href::before {
+    background-image: url('../img/folder-minus.svg');
+}
+
+/* Folder styles */
+
+.folder-box {
+    position: relative;
+    background-color: #D9D9D9;
+    max-width: 75%;
+    width: auto;
+    height: auto;
+    float: left;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 32px 64px;
+    z-index: 1;
+    /* margin: 32px 0 32px 64px; */
+}
+
+.folder-box-div {
+    margin: 8px 0 0 8px;
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+    display: flex;
+}
+
+.folder-litter {
+    width: 150px;
+    background-size: cover; 
+    background-size: contain; 
+    background-repeat: no-repeat;
+    display: inline-block;
+    flex-direction: column;
+    padding: 8px;
+    box-sizing: border-box;
+    flex-shrink: 0; /* 幅を超えて縮まないように */
+    margin: 6px 16px 0 0;
+}
+
+.folder-litter p, 
+.folder-litter a {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.folder-title {
+    margin: 18px 0 0 10px;
+    width: 128px;
+    height: 18px;
+    word-wrap: break-word; 
+    white-space: normal;
+}
+
+.folder-title br {
+    margin-bottom: 3px;
+}
+
+.folder-title p{
+    word-break: break-all;
+}
+
+.folder-litter-div {
+    display: inline-block;
+    width: auto;
+    margin: 48px 0 4px 10px;
+    vertical-align: middle; 
+}
+
+.folder-litter-div-a {
+    margin-left: 2px;
+    margin-bottom: 1px;
+    vertical-align: middle; 
+    height: 16px;
+}
+
+.folder-litter-div a img {
+    width: 16px;
+    vertical-align: middle; 
+}
+
+.folder-box h2 {
+    margin-left: 8px;
+    font-size: 22px;
+}
+
 .folder-litter a {
     font-style: none;
 }
+
+/* View_urls styles */
+
 .folder_urls {
-    margin: 100px auto;
-    width: auto;
+    width: 82%;
+    margin: 0 auto;
 }
+
 .folder_urls ul li a{
     color: #565656;
 }
+
 .folder_urls h1 {
     display: inline-block;
     font-size: 24px;
     width: auto;
 }
+
 .folder_urls .before {
     width: 28px;
     height: 28px;
@@ -466,14 +557,11 @@ select {
     vertical-align: middle;
     margin-right: 10px;
 }
+
 .folder_title {
     display: flex;
     align-items: center;
     margin: 8px 10px 16px 4px;
-}
-.folder_urls {
-    width: 82%;
-    margin: 0 auto;
 }
 .folder_urls table {
     text-align: center;
@@ -566,25 +654,11 @@ select {
     border: solid 1px #b6b6b6;
     z-index: 20;
 }
-.create-menu ul li::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.create-menu ul li.create-folder-href::before {
-    background-image: url('../img/folder-plus.svg');
-}
-.create-menu ul li.add-url-href::before {
-    background-image: url('../img/link-2.svg');
-}
-.create-menu ul li.delete-folder-href::before {
-    background-image: url('../img/folder-minus.svg');
-}
 .popup {
+    margin: 120px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     cursor: auto;
 }

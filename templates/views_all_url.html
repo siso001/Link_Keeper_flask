@@ -21,7 +21,13 @@
                 {% for url, folder_name in urls %}
                 <tr class="urls_tr">
                     <td class="name">{{ url.url_name }}</td>
-                    <td class="url"><div class="url-content"><a href="{{ url.url }}" target="_blank" rel="noopener noreferrer">{{ url.url }}</a></div></td>
+                    <td class="url">
+                        <div class="url-content">
+                            <a href="{{ url.url }}" target="_blank" rel="noopener noreferrer">
+                                {{ url.url }}                            
+                            </a>
+                        </div>
+                    </td>
                     <td class="folder"><a target="_blank" rel="noopener noreferrer">{{ (folder_name or 'No Folder') | replace('<br>', ' ') }}</a></td>
                     <td class="domain"><div class="url-content"><a href="http://{{ url.domain }}" target="_blank" rel="noopener noreferrer">{{ url.domain }}</a></div></td>
                     <td class="after" data-url-id="{{ url.url_id }}"></td>
